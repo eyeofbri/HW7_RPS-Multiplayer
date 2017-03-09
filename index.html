@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BRIAN's Multiplayer Rock, Paper, Scissors game</title>
+
+	<link rel="stylesheet" type="text/css" href="./assets/reset.css">
+
+	<link rel="stylesheet" type="text/css" href="./assets/bri_rps-multiplayer.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+	<script src="./assets/bri_rps-multiplayer.js"></script>
+</head>
+<body>
+	
+	<div class="BG">
+		<div class="BG-trim-wall"></div>
+		<div class="BG-trim-floor"></div>
+		<div class="BG-floor"></div>
+	</div>
+
+	<div id="gameContainer">
+
+		<div id="gameTitle-holder">Rock, Paper, Scissors</div>
+
+		<header id="projectorScreen-holder">
+			<div id="projectorScreen-top"></div>
+			<div id="projectorScreen" class="projectorScreen-open">
+				
+				<div id="joinGame">
+					<input type="text" id="joinGame-input" value="" placeholder="Name">
+      				<input id="joinGame-submit" type="submit" value="Join Game">
+				</div>
+				
+				<div id="combatant-data-holder">
+					<div id="combatant-one-data">
+						<div class="combatant-name">Waiting for Player 1</div>
+						<div class="stats hide">
+							<div class="wins">0</div>
+							<div class="loses">0</div>
+						</div>
+						<!-- <div class="attackSelect">
+							<button>👊</button>
+							<button>✌️️</button>
+							<button>✋</button>
+						</div> -->
+					</div>
+					<div id="combatant-two-data">
+						<div class="combatant-name">Waiting for Player 2</div>
+						<div class="stats hide">
+							<div class="wins">0</div>
+							<div class="loses">0</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<button id="projectorScreen-toggle"></button>
+			
+		</header>
+
+		<section id="spectator-holder">
+			<div id="spectatorBench-LEFT">
+				<div class="spectator">
+					<div class="screenDisplay">
+					<!-- 😀 -->
+					</div>
+				</div>
+				<div class="spectator">
+					<div class="screenDisplay">
+					<!-- 😠 -->
+					</div>
+				</div>
+				<div class="spectator">
+					<div class="screenDisplay">
+					<!-- 😢 -->
+					</div>
+				</div>
+			</div>
+			
+			<div id="spectatorBench-RIGHT">
+				<div class="spectator">
+					<div class="screenDisplay">
+					<!-- 😞 -->
+					</div>
+				</div>
+				<div class="spectator">
+					<div class="screenDisplay">
+					<!-- 😎 -->
+					</div>
+				</div>
+				<div class="spectator">
+					<div class="screenDisplay">
+					<!-- s😐 -->
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="combatant-holder">
+			<div id="combatant-ONE">
+				<div class="screenDisplay">
+				<!-- 👊 -->
+				</div>
+				
+			</div>
+			<div id="combatant-TWO">
+				<div class="screenDisplay">
+				<!-- ✌ -->
+				️️</div>
+				
+			</div>
+		</section>
+
+		<div class="chat-holder hide">
+			<div id="chat-display">
+				<p class="chat-p2">username: text line goes here</p>
+				<p class="chat-p1">username: text line goes here</p>
+				<p class="chat-p1">username: text line goes here</p>
+				<p class="chat-p2">username: text line goes here</p>
+				<p class="chat-p1">username: text line goes here</p>
+				<p class="chat-p2">username: text line goes here</p>
+				<p class="chat-p1">username: text line goes here</p>
+				<p class="chat-disconnect">name has disconnected.</p>
+				<p class="chat-p2">username: text line goes here</p>
+				<p class="chat-p1">username: text line goes here</p>
+				<p class="chat-p2">username: text line goes here</p>
+				<p class="chat-p1">username: text line goes here</p>
+			</div>
+			<div class="chat-interactions">
+				<input type="text" id="chat-input" value="" placeholder="Type to chat">
+      			<input id="chat-submit" type="submit" value="Chat">
+			</div>
+			
+		</div>
+
+	</div>
+
+	<div id="overlay-display-holder" class="hide">
+		<div id="overlay-display">Name Wins!</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,566 @@
+body{
+	/*background-color: #8c836f;*/
+	background-color: #000;
+}
+
+
+.hide{
+	display: none !important;
+}
+
+.BG{
+	position: absolute;
+	background-color: #8c836f;
+	width: 100%;
+	height: 100%;
+	background-image: url("./images/wallpaper.png");
+	background-position: 50% 0;
+	/*display: flex;*/
+	/*flex-direction: column;*/
+	/*align-items: center;*/
+    /*justify-content: center;*/
+}
+.BG-trim-wall{
+	width: 100%;
+	height: 40px;
+	background-color: #41241d;
+	margin-top: 150px;
+	border-top: 2px solid #281612;
+	box-shadow: 0 10px 1px #281612, 0 10px 50px #000;
+	background-image: url("./images/trim.png");
+	background-position: center top;
+	background-size: 400px 100px;
+	box-shadow: ;
+}
+.BG-trim-floor{
+	width: 100%;
+	height: 20px;
+	background-color: #41241d;
+	margin-top: 100px;
+	border-top: 2px solid #281612;
+	border-bottom: 2px solid #281612;
+	background-image: url("./images/trim.png");
+	background-position: center center;
+	background-size: 400px 200px;
+	box-shadow: inset 0 0 5px 10px rgba(0,0,0,0.3);
+}
+.BG-floor{
+	box-shadow:inset 0 10px 50px #000;
+	background-color: #333;
+	width: 100%;
+	height: calc(100% - 316px);
+	min-height: 400px;
+	background-image: url("./images/floor.png");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+
+
+#gameContainer{
+	max-width: 1024px;
+	min-height: 528px; 
+	margin-right: auto;
+	margin-left: auto;
+	/*background-color: red;*/
+	position: relative;
+}
+
+
+
+
+
+
+
+#projectorScreen-holder{
+	height: 30vh;
+	min-height: 200px;
+	/*min-height: 75px;*/
+	width: 100%;
+	/*background-color: blue;*/
+	display: flex;
+	flex-direction: column;
+}
+#projectorScreen-top{
+	margin-top: calc(2% - 2px);
+	height: 5%;
+	width: 85%;
+	background-color: #ccc;
+	border: 2px solid #000;
+	border-radius: 5px;
+	margin-right: auto;
+	margin-left: auto;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 0 13px #000;
+}
+#projectorScreen{
+	height: 10px;
+	width: calc(80% - 16px);
+	background-color: #DFE0D5;
+	box-shadow: inset 0 0 13px #000, 0 5px 10px rgba(0,0,0,0.5);
+	border: 8px solid #000;
+	border-top: 10px solid #000;
+	margin-right: auto;
+	margin-left: auto;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    /*justify-content: center;*/
+    transition: height .3s ease;
+    overflow: hidden;
+}
+.projectorScreen-open{
+	height: calc(70% - 20px) !important;
+}
+#projectorScreen-toggle{
+	width: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 3px solid #000;
+	border-radius: 10px;
+	background-color: transparent;
+	cursor: pointer;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+}
+
+
+
+#gameTitle-holder{
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	/*background-color: red;*/
+	width: 100%;
+	font-family: 'Baloo Bhaina', cursive;
+	text-align: center;
+	top: 10px;
+	overflow: hidden;
+	font-size: 6vmin;
+	font-style: italic;
+	color: #ffda2d;
+	/*fdefb0;*/
+	display: flex;
+	flex-direction: row;
+    align-items: center;
+    justify-content: center;
+	text-shadow: 0 1px 0 #333, 
+               0 2px 0 #000,
+               0 3px 0 #000,
+               0 4px 0 #333,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 6px 10px rgba(0,0,0,.2),
+               0 6px 12px rgba(0,0,0,.15);
+}
+
+.gameTitle{
+	min-width: 1vw;
+	/*background-color: #333;*/
+	transition: color .5s ease, font-size 1s ease;
+}
+.gameTitle-glow{
+	color: #fdefb0;
+}
+
+
+
+#joinGame{
+	width: 80%;
+	background-color: #333;
+	margin-top: 20px;
+	height: 30px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+    overflow: hidden;
+    border-radius: 10px;
+}
+#joinGame-input{
+	width: 70%;
+	height: 100%;
+	padding:0;
+	text-align: center;
+	font-size: 20px;
+}
+#joinGame-submit{
+	width: 30%;
+	height: 100%;
+	padding: 0;
+	margin:0;
+	background-color: #ccc;
+	color:#333;
+	cursor: pointer;
+}
+
+
+#combatant-data-holder{
+	/*background-color: #333;*/
+	width: 95%;
+	height: 50%;
+	margin-top: 5px;
+	display: flex;
+}
+
+
+
+#combatant-one-data, 
+#combatant-two-data{
+	width: 47%;
+	bottom: 30%;
+	display: flex;
+	flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px dotted rgba(0,0,0,0.2);*/
+}
+#combatant-two-data{
+	margin-left: auto;
+}
+
+.combatant-name{
+	font-family: 'Baloo Bhaina', cursive;
+	font-size: 3vmin;
+	color:#333;
+	text-align: center;
+}
+
+.stats{
+	font-family: sans-serif;
+	/*background-color: blue;*/
+	width:100%;
+	display: flex;
+	justify-content: center;
+}
+.wins{
+	padding-right: 5px;
+}
+.wins:before{
+	content: "Wins: ";
+}
+.wins:after{
+	content: " // ";
+}
+.loses:before{
+	content: "Loses: ";
+}
+
+
+
+.attackSelect{
+	/*background-color: #333;*/
+	width: 100%;
+	height: 50%;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
+.attackSelect button{
+	width: 30%;
+	font-size: 3vmin;
+	background-color: transparent;
+	border-radius: 5px;
+	-webkit-filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.45));
+	drop-shadow(0px 5px 5px rgba(0,0,0,0.45));
+	text-shadow: 1px 1px 3px #333, 1px -1px 3px #333, -1px 1px 3px #333, -1px -1px 0 #333; 
+	-webkit-filter: grayscale(1);
+    filter: grayscale(1);
+    transition: filter .5s ease, background-color 1s ease;
+}
+
+.attackSelect button:hover{
+	-webkit-filter: grayscale(0);
+    filter: grayscale(0);
+    cursor: pointer;
+    background-color: #000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#spectator-holder {
+	height: 25vh;
+	min-height: 150px;
+	width: 100%;
+	/*background-color: #ccc;*/
+	display: flex;
+}
+
+#spectatorBench-LEFT, 
+#spectatorBench-RIGHT{
+	width: 40%;
+	height: 98%;
+	background-image: url("./images/table_small.png");
+	background-size: 100% 50%;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	-webkit-filter: drop-shadow(0px 20px 10px rgba(0,0,0,0.25));
+}
+
+#spectatorBench-RIGHT{
+	margin-left: auto;
+}
+
+.spectator{
+	height: 15vh;
+	min-height: 90px;
+	width: 30%;
+	/*background-color: #333;*/
+	background-image: url("./images/computer_small.png");
+	background-size: 100% 100%;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	-webkit-filter: drop-shadow(0px 8px 4px rgba(0,0,0,0.4));
+	drop-shadow(0px 12px 5px rgba(0,0,0,0.45));
+	display: flex;
+    align-items: top;
+    justify-content: center;
+}
+
+
+#spectatorBench-RIGHT .spectator{
+	background-image: url("./images/computer_small_flipped.png");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#combatant-holder{
+	height: 45vh;
+	min-height: 301px;
+	width: 100%;
+	/*background-color: #f3f3f3;*/
+	background-image: url("./images/table_large.png");
+	background-size: 100% 100%;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	display: flex;
+	-webkit-filter: drop-shadow(0px -20px 10px rgba(0,0,0,0.25)) drop-shadow(0px 20px 10px rgba(0,0,0,0.25));
+	drop-shadow(0px -20px 10px rgba(0,0,0,0.25));
+}
+
+#combatant-ONE, 
+#combatant-TWO{
+	width: 35vw;
+	/*height: 98%;*/
+	margin-top: -10%;
+	/*background-color: #333;*/
+	background-image: url("./images/computer_large.png");
+	background-size: 100% 50%;
+	background-position: top;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	z-index: 1;
+	margin-left: 5vw;
+	-webkit-filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.45));
+	drop-shadow(0px 5px 5px rgba(0,0,0,0.45));
+	position: relative;
+}
+
+
+#combatant-TWO{
+	/*background-color: red;*/
+	background-image: url("./images/computer_large_flipped.png");
+	margin-left: auto;
+	margin-right: 5vw;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chat-holder{
+	position: absolute;
+	bottom: 0;
+	/*background-color: #fff;*/
+	width: 100%;
+	height: 20vh;
+	min-height: 115px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+    align-items: center;
+}
+
+#chat-display{
+	background-color: rgba(236,236,236,0.2);
+	width: calc(80% - 2px);
+	height: calc(60% - 2px);
+	border: 2px solid #000;
+	overflow: scroll;
+	text-align: left;
+	font-size: 4vmin;
+	font-family: sans-serif;
+	text-shadow: -1px -1px 3px #000;
+}
+#chat-display p::first-letter{
+	text-transform: capitalize;
+}
+.chat-p1{
+	color:#fff;
+	border-bottom: 1px dotted #333;
+	padding-left: 10px;
+}
+
+.chat-p2{
+	color:#a6a6a6;
+	border-bottom: 1px dotted #333;
+	padding-left: 10px;
+}
+.chat-interactions{
+	background-color: #000;
+	width: calc(80% - 2px);
+	height: calc(10% - 2px);
+	border: 2px solid #000;
+	overflow: hidden;
+}
+
+.chat-disconnect{
+	background-color: #6b210e !important;
+	text-align: center;
+	color:rgba(203,104,78,0.5);
+	padding: 4px 0;
+	text-transform: uppercase;
+	text-shadow: 0px 0px 0px #fff;
+}
+
+#chat-input{
+	width: 70%;
+}
+#chat-submit{
+	width: 20%;
+	height: 100%;
+	padding: 0;
+	margin:0;
+	background-color: #ccc;
+	color:#333;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+.screenDisplay{
+	width: 50%;
+	height: 80%;
+	/*color: transparent;*/
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 6vmin;
+	text-align: center;
+	overflow: hidden;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.5);
+     -webkit-filter: blur(1px);
+    filter: blur(1px);
+}
+#combatant-ONE .screenDisplay,
+#combatant-TWO .screenDisplay{
+	padding-left: 0;
+	padding-right: 15%;
+	height: 25%;
+	font-size: 8vmin;
+	color: rgba(255,255,255,0.8);
+	-webkit-filter: blur(0);
+    filter: blur(0);
+}
+#combatant-TWO .screenDisplay{
+	padding-left: 15%;
+	padding-right: 0;
+}
+
+@media (max-height: 450px) {
+	.screenDisplay{
+		font-size: 25px;
+	}
+	#combatant-ONE .screenDisplay,
+	#combatant-TWO .screenDisplay{
+		font-size: 35px;
+	}
+	#gameTitle{
+		font-size: 25px;
+	}
+	.combatant-name{
+		font-size: 20px;
+	}
+}
+
+
+
+
+
+
+#overlay-display-holder{
+	width: 100%;
+	height: 70%;
+	/*background-color: rgba(0,0,0,0.5);*/
+	position: absolute;
+	bottom: 0px;
+	display: flex;
+
+	text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+#overlay-display{
+	/*width: 40%;*/
+	/*height: 25%;*/
+	z-index: 2;
+	font-size: 10vmin;
+	color: #fff;
+	font-family: 'Baloo Bhaina', cursive;
+	padding: 0 20px;
+	padding-top:20px;
+	background-color: rgba(30,30,30,0.95);
+	border-radius: 20px;
+	border: 5px solid #000;
+	box-shadow: 0 10px 1px #000, 0 10px 50px #000;
+}
+
