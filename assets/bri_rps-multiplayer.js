@@ -606,6 +606,7 @@ dataRef.ref().once("value", function(snapshot) {
 
 var canUnload = true;
 window.onbeforeunload = page_unload;
+window.addEventListener ("beforeunload", handler, useCapture);
 function page_unload(){
    if(myPlayerNumber !="" && canUnload){
    		canUnload = false;
