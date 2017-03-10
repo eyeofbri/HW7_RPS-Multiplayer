@@ -31,17 +31,20 @@
 			<div id="projectorScreen-top"></div>
 			<div id="projectorScreen" class="projectorScreen-open">
 				
-				<div id="joinGame">
-					<input type="text" id="joinGame-input" value="" placeholder="Name">
+				<div id="joinGame" class="hide">
+					<input type="text" id="joinGame-input" placeholder="Name">
       				<input id="joinGame-submit" type="submit" value="Join Game">
 				</div>
+
+				<div id="display-text-top" class="hide"></div>
+				<div id="display-text-sub" class="hide"></div>
 				
 				<div id="combatant-data-holder">
 					<div id="combatant-one-data">
-						<div class="combatant-name">Waiting for Player 1</div>
+						<div class="combatant-name"></div>
 						<div class="stats hide">
 							<div class="wins">0</div>
-							<div class="loses">0</div>
+							<div class="losses">0</div>
 						</div>
 						<!-- <div class="attackSelect">
 							<button>👊</button>
@@ -50,10 +53,10 @@
 						</div> -->
 					</div>
 					<div id="combatant-two-data">
-						<div class="combatant-name">Waiting for Player 2</div>
+						<div class="combatant-name"></div>
 						<div class="stats hide">
 							<div class="wins">0</div>
-							<div class="loses">0</div>
+							<div class="losses">0</div>
 						</div>
 					</div>
 				</div>
@@ -103,34 +106,17 @@
 
 		<section id="combatant-holder">
 			<div id="combatant-ONE">
-				<div class="screenDisplay">
-				<!-- 👊 -->
-				</div>
+				<div class="screenDisplay"></div>
 				
 			</div>
 			<div id="combatant-TWO">
-				<div class="screenDisplay">
-				<!-- ✌ -->
-				️️</div>
+				<div class="screenDisplay"></div>
 				
 			</div>
 		</section>
 
-		<div class="chat-holder hide">
-			<div id="chat-display">
-				<p class="chat-p2">username: text line goes here</p>
-				<p class="chat-p1">username: text line goes here</p>
-				<p class="chat-p1">username: text line goes here</p>
-				<p class="chat-p2">username: text line goes here</p>
-				<p class="chat-p1">username: text line goes here</p>
-				<p class="chat-p2">username: text line goes here</p>
-				<p class="chat-p1">username: text line goes here</p>
-				<p class="chat-disconnect">name has disconnected.</p>
-				<p class="chat-p2">username: text line goes here</p>
-				<p class="chat-p1">username: text line goes here</p>
-				<p class="chat-p2">username: text line goes here</p>
-				<p class="chat-p1">username: text line goes here</p>
-			</div>
+		<div id="chat-holder" class="hide">
+			<div id="chat-display"></div>
 			<div class="chat-interactions">
 				<input type="text" id="chat-input" value="" placeholder="Type to chat">
       			<input id="chat-submit" type="submit" value="Chat">

@@ -13,6 +13,7 @@ body{
 	background-color: #8c836f;
 	width: 100%;
 	height: 100%;
+	min-height: 300px;
 	background-image: url("./images/wallpaper.png");
 	background-position: 50% 0;
 	/*display: flex;*/
@@ -113,6 +114,7 @@ body{
     /*justify-content: center;*/
     transition: height .3s ease;
     overflow: hidden;
+    padding-bottom: 5px;
 }
 .projectorScreen-open{
 	height: calc(70% - 20px) !important;
@@ -168,7 +170,7 @@ body{
 	transition: color .5s ease, font-size 1s ease;
 }
 .gameTitle-glow{
-	color: #fdefb0;
+	color: #fff;
 }
 
 
@@ -203,10 +205,24 @@ body{
 }
 
 
+
+#display-text-top , #display-text-sub {
+    font-family: 'Baloo Bhaina', cursive;
+	font-size: 16px;
+	margin-top: 12px;
+}
+#display-text-sub{
+	text-decoration: underline;
+}
+
+
+
+
+
 #combatant-data-holder{
 	/*background-color: #333;*/
 	width: 95%;
-	height: 50%;
+	height: 70%;
 	margin-top: 5px;
 	display: flex;
 }
@@ -216,15 +232,26 @@ body{
 #combatant-one-data, 
 #combatant-two-data{
 	width: 47%;
-	bottom: 30%;
+	/*bottom: 30%;*/
 	display: flex;
 	flex-direction: column;
     align-items: center;
     justify-content: center;
-    /*border: 1px dotted rgba(0,0,0,0.2);*/
+    border-top: 1px dotted rgba(0,0,0,0.2);
+    border-right: 1px dotted rgba(0,0,0,0.2);
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.05);
+    padding: 2px 0;
+    padding-bottom: 5px;
 }
 #combatant-two-data{
 	margin-left: auto;
+	border-right: 0px;
+	border-left: 1px dotted rgba(0,0,0,0.2);
+}
+.combantant-turn-highlight{
+	/*border: 3px dotted rgba(0,0,0,0.2);*/
+	background-color: rgba(255,255,255,0.7) !important;
 }
 
 .combatant-name{
@@ -242,16 +269,27 @@ body{
 	justify-content: center;
 }
 .wins{
-	padding-right: 5px;
+	/*background-color: rgba(58,117,54,0.4);*/
+	color: rgba(58,117,54,1);
+	padding: 3px 5px;
+	border-radius: 10px;
+	margin-right: 5px;
+	text-align: center;
+	text-transform: uppercase;
 }
 .wins:before{
 	content: "Wins: ";
 }
-.wins:after{
-	content: " // ";
+.losses:before{
+	content: "Losses: ";
 }
-.loses:before{
-	content: "Loses: ";
+.losses{
+	/*background-color: rgba(109,39,36,0.4);*/
+	color: rgba(109,39,36,1);
+	padding: 3px 5px;
+	border-radius: 10px;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 
@@ -259,29 +297,39 @@ body{
 .attackSelect{
 	/*background-color: #333;*/
 	width: 100%;
-	height: 50%;
+	height: 40px;
 	text-align: center;
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
+	padding-top: 3px;
+	cursor: pointer;
 }
 .attackSelect button{
 	width: 30%;
-	font-size: 3vmin;
-	background-color: transparent;
+	font-size: 4vmin;
+	/*background-color: #000 !important;*/
 	border-radius: 5px;
-	-webkit-filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.45));
-	drop-shadow(0px 5px 5px rgba(0,0,0,0.45));
-	text-shadow: 1px 1px 3px #333, 1px -1px 3px #333, -1px 1px 3px #333, -1px -1px 0 #333; 
-	-webkit-filter: grayscale(1);
-    filter: grayscale(1);
-    transition: filter .5s ease, background-color 1s ease;
+	-webkit-filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.45));
+	drop-shadow(0px 1px 1px rgba(0,0,0,0.45));
+    background-color: transparent ;
+    border: 0px;
+    transition: filter .5s ease, background-color 1s ease, font-size .2s ease;
+
+    display: flex;
+	justify-content: center;
+	flex-direction: column;
+    align-items: center;
+    cursor: pointer;
 }
 
 .attackSelect button:hover{
-	-webkit-filter: grayscale(0);
-    filter: grayscale(0);
+	-webkit-filter: grayscale(1);
+    filter: grayscale(1);
     cursor: pointer;
-    background-color: #000;
+    /*background-color: #333;*/
+    color:#fff;
+    font-size: 8vmin;
 }
 
 
@@ -406,13 +454,13 @@ body{
 
 
 
-.chat-holder{
+#chat-holder{
 	position: absolute;
 	bottom: 0;
 	/*background-color: #fff;*/
 	width: 100%;
 	height: 20vh;
-	min-height: 115px;
+	min-height: 250px;
 	text-align: center;
 	display: flex;
 	justify-content: center;
@@ -436,14 +484,24 @@ body{
 }
 .chat-p1{
 	color:#fff;
+	background-color: rgba(0,255,0,0.25);
 	border-bottom: 1px dotted #333;
 	padding-left: 10px;
 }
 
 .chat-p2{
-	color:#a6a6a6;
+	color:#fff;
+	background-color: rgba(0,0,255,0.25);
 	border-bottom: 1px dotted #333;
 	padding-left: 10px;
+}
+.chat-alert{
+	text-align:center;
+	color:#ffda2d;
+	background-color: rgba(0,0,0,0.25);
+	border-bottom: 1px dotted #333;
+	padding-left: 10px;
+	font-size: 3vmin;
 }
 .chat-interactions{
 	background-color: #000;
@@ -516,6 +574,42 @@ body{
 	padding-right: 0;
 }
 
+
+
+
+
+
+
+#overlay-display-holder{
+	width: 100%;
+	height: 100%;
+	/*background-color: rgba(0,0,0,0.5);*/
+	position: absolute;
+	bottom: 0px;
+	display: flex;
+
+	text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+#overlay-display{
+	z-index: 2;
+	font-size: 8vmin;
+	color: #fff;
+	font-family: 'Baloo Bhaina', cursive;
+	padding: 0 20px;
+	top:210px;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgba(30,30,30,0.95);
+	border-radius: 20px;
+	border: 5px solid #000;
+	box-shadow: 0 10px 1px #000, 0 10px 50px #000;
+}
+
+
+
 @media (max-height: 450px) {
 	.screenDisplay{
 		font-size: 25px;
@@ -530,37 +624,15 @@ body{
 	.combatant-name{
 		font-size: 20px;
 	}
-}
+	.attackSelect button{
+		font-size: 20px;
+	}
+	.stats{
+		font-size: 12px;
+	}
 
-
-
-
-
-
-#overlay-display-holder{
-	width: 100%;
-	height: 70%;
-	/*background-color: rgba(0,0,0,0.5);*/
-	position: absolute;
-	bottom: 0px;
-	display: flex;
-
-	text-align: center;
-    align-items: center;
-    justify-content: center;
-}
-#overlay-display{
-	/*width: 40%;*/
-	/*height: 25%;*/
-	z-index: 2;
-	font-size: 10vmin;
-	color: #fff;
-	font-family: 'Baloo Bhaina', cursive;
-	padding: 0 20px;
-	padding-top:20px;
-	background-color: rgba(30,30,30,0.95);
-	border-radius: 20px;
-	border: 5px solid #000;
-	box-shadow: 0 10px 1px #000, 0 10px 50px #000;
+	#overlay-display{
+		font-size: 30px;
+	}
 }
 
