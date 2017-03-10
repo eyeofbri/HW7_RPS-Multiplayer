@@ -604,11 +604,11 @@ dataRef.ref().once("value", function(snapshot) {
 
 
 
-
-window.onbeforeunload = closingCode;
-function closingCode(){
-   if(myPlayerNumber !=""){
-
+var canUnload = true;
+window.onbeforeunload = page_unload;
+function page_unload(){
+   if(myPlayerNumber !="" && canUnload){
+   		canUnload = false;
    		//RESTART the player system for this player
    		dataRef.ref().child("players").child( myPlayerNumber ).remove();
    		dataRef.ref().child("players").child("turn").remove();
@@ -616,8 +616,8 @@ function closingCode(){
    		//restart the chat...
    		//..but first, send out a player disconnected into the chat...
    		//...so the other player sees that
+
    		//grab the current chat log number from firebase
-		
 		var currentChat_number = once("players").child("chatLog").child("currentCount").val() ;
 		
 		//update it right away
@@ -643,6 +643,11 @@ function closingCode(){
    }
    return null;
 }
+
+//Adding this to try and get unload events on mobile devices
+$(window).unload( function() {
+   page_unload();
+});
 
 
 function once(keyName) {
