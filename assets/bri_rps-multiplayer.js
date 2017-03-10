@@ -605,8 +605,13 @@ dataRef.ref().once("value", function(snapshot) {
 
 
 var canUnload = true;
+window.onunload = function() {
+	page_unload();
+}
 window.onbeforeunload = page_unload;
-window.addEventListener ("beforeunload", handler, useCapture);
+window.addEventListener("beforeunload", function (event) {
+  page_unload();
+});
 function page_unload(){
    if(myPlayerNumber !="" && canUnload){
    		canUnload = false;
@@ -645,10 +650,7 @@ function page_unload(){
    return null;
 }
 
-//Adding this to try and get unload events on mobile devices
-$(window).unload( function() {
-   page_unload();
-});
+
 
 
 function once(keyName) {
