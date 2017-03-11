@@ -13,15 +13,9 @@ var myPlayerNumber = "";
 var initial_chat_load = false;
 
 
-
-// var myPlayerKey = "";
-// var activePlayer = false;
-
-
-
 $(document).ready(function() {
 
-	gameFunctions("titleText-Glow-start");
+	animateText("load");
 
 	$("#projectorScreen-toggle").click(function(event) {
 		$("#projectorScreen").toggleClass("projectorScreen-open");
@@ -41,19 +35,17 @@ $(document).ready(function() {
 });
 
 
-function gameFunctions(whatToDo) {
 
-	var whatToDo_Split = whatToDo.split("_");
 
-	if(whatToDo == "titleText-Glow-start"){
+function animateText(whatToDo) {
+
+	if(whatToDo == "load"){
 		//split the game's title text up into divs...
-		//...so we can loop through them and assign classes later
-
 		var titleText = [];
 		titleText = $("#gameTitle-holder").text().split("");
 		$("#gameTitle-holder").text("");
 
-
+		//...so we can loop through them and assign classes
 		for (var i = 0; i < titleText.length; i++) {
 			var new_titleText_div = $("<div>");
 			new_titleText_div.text(titleText[i]);
@@ -62,56 +54,69 @@ function gameFunctions(whatToDo) {
 		}
 
 		//loop through those new divs and add the glow text class
-		gameFunctions("titleText-Glow");
+		animateText("animate");
 		
 		//...then set an interval that does the same
 		setInterval(function(){ 
-			gameFunctions("titleText-Glow");
+			animateText("animate");
 		}, 5000);
 	}
 
-	if(whatToDo == "titleText-Glow"){
+		// this makes the split  text glow
+	if(whatToDo == "animate"){
 		//loop through the game title text divs...
 		//...and set timeouts that Add and Remove the glow text class
 		var gt = document.getElementsByClassName("gameTitle");
-			for (var i = 0; i < gt.length; i++) {
+		for (var i = 0; i < gt.length; i++) {
 
-				setTimeout(function(g){ 
-					$(".gameTitle").eq(g).addClass("gameTitle-glow");
+			setTimeout(function(g){ 
+				$(".gameTitle").eq(g).addClass("gameTitle-glow");
 
-					setTimeout(function(g2){ 
-						$(".gameTitle").eq(g2).removeClass("gameTitle-glow");
-					}, (50 * g),g );
+				setTimeout(function(g2){ 
+					$(".gameTitle").eq(g2).removeClass("gameTitle-glow");
+				}, (200 * g),g );
 
-				}, (100 * i),i );	
+			}, (100 * i),i );	
 		}
 	}
+}
 
-	if(whatToDo == "try-add-player"){
-		if($("#joinGame-input").val().trim() != "" ){
- 			var playerName = capitalizeFirstLetter( $("#joinGame-input").val().trim() );
+function gameFunctions(whatToDo) {
 
- 			var player1 = once("players").val().player1;
- 			var player2 = once("players").val().player2;
- 			var whichPlayer = "";
- 			if(!player1){ whichPlayer = "player1";
- 			}else if(!player2){ whichPlayer = "player2"; }
+	var whatToDo_Split = whatToDo.split("_");
 
- 			if(whichPlayer !=""){
- 				myPlayerNumber = whichPlayer;
-	 			dataRef.ref().child("players").child(whichPlayer).update({ 
-				  	name: playerName, 
-				  	wins: 0,
-				    losses: 0
-				});
-				$("#joinGame").remove();
-				$("#display-text-top").removeClass("hide");
-			  	$("#display-text-top").text("Hi "+playerName+"! You Are "+whichPlayer.substring(0, whichPlayer.length -1)+" "+ whichPlayer.slice(-1)+".");
-			  	
- 			}
+	if(whatToDo == "try-add-player" 
+		&& $("#joinGame-input").val().trim() != "" ){
 
- 			
-	   	}
+		var playerName = capitalizeFirstLetter( $("#joinGame-input").val().trim() );
+
+		var player1 = once("players").val().player1;
+		var player2 = once("players").val().player2;
+		var whichPlayer = "";
+		if(!player1){ whichPlayer = "player1";
+		}else if(!player2){ whichPlayer = "player2"; }
+
+		if(whichPlayer !=""){
+			myPlayerNumber = whichPlayer;
+			dataRef.ref().child("players").child(whichPlayer).update({ 
+		  	name: playerName, 
+		  	wins: 0,
+		    losses: 0
+		});
+
+		$("#joinGame").remove();
+		$("#display-text-top").removeClass("hide");
+	  	$("#display-text-top").text("Hi "+playerName+"! You Are "+whichPlayer.substring(0, whichPlayer.length -1)+" "+ whichPlayer.slice(-1)+".");
+	  	
+	  	shakeThings("display-text-top");
+		  	setTimeout(function(){ 
+				if(myPlayerNumber == "player1"){
+			  		shakeThings("combatant-one-data");
+			  	}else{
+			  		shakeThings("combatant-two-data");
+			  	}
+			}, (100) ); 	
+		}
 	}
 
 	if(whatToDo == "append-atk"){
@@ -133,110 +138,77 @@ function gameFunctions(whatToDo) {
 
 		rock_btn.unbind().click(function(event) {
 	   		event.preventDefault();
-	   		
-	   		dataRef.ref().child("players").child(myPlayerNumber).update({ choice: "rock" });
-			
-			var currentTurn = once("players").val().turn;
-			dataRef.ref().child("players").update({ turn: (currentTurn+1) });
-
-			if(myPlayerNumber == "player1"){
-				$("#combatant-ONE .screenDisplay").text( returnEmoji( "rock" ) );
-			}else{ $("#combatant-TWO .screenDisplay").text( returnEmoji( "rock" ) ); }
+	   		gameFunctions("atk_rock");
 		});
 		paper_btn.unbind().click(function(event) {
 	   		event.preventDefault();
-	   		
-	   		dataRef.ref().child("players").child(myPlayerNumber).update({ choice: "paper" });
-		
-			var currentTurn = once("players").val().turn;
-			dataRef.ref().child("players").update({ turn: (currentTurn+1) });
-
-			if(myPlayerNumber == "player1"){
-				$("#combatant-ONE .screenDisplay").text( returnEmoji( "paper" ) );
-			}else{ $("#combatant-TWO .screenDisplay").text( returnEmoji( "paper" ) ); }
+	   		gameFunctions("atk_paper");
 		});
 		scissors_btn.unbind().click(function(event) {
 	   		event.preventDefault();
-	   		
-	   		dataRef.ref().child("players").child(myPlayerNumber).update({ choice: "scissors" });
-		
-			var currentTurn = once("players").val().turn;
-			dataRef.ref().child("players").update({ turn: (currentTurn+1) });
-
-			if(myPlayerNumber == "player1"){
-				$("#combatant-ONE .screenDisplay").text( returnEmoji( "scissors" ) );
-			}else{ $("#combatant-TWO .screenDisplay").text( returnEmoji( "scissors" ) ); }
+	   		gameFunctions("atk_scissors");
 		});
 
 		if(myPlayerNumber == "player1"){ 
 			atk.insertBefore( $( "#combatant-one-data .stats" ) );
 			$("#display-text-sub").removeClass("hide").text("It is your turn!");
-		}else{ 
+			
+		}else if(myPlayerNumber == "player2"){ 
 			atk.insertBefore( $( "#combatant-two-data .stats" ) );
 			$("#display-text-sub").removeClass("hide").text("It is your turn!");
 		}
+
+		shakeThings("atk");
+
+		$("#combatant-ONE .screenDisplay").text( returnEmoji( "question" ) );
+		$("#combatant-TWO .screenDisplay").text( returnEmoji( "question" ) );
+		
+	}
+
+	if(whatToDo_Split[0] == "atk"){
+		var whichAttack = whatToDo_Split[1];
+
+   		dataRef.ref().child("players").child(myPlayerNumber).update({ choice: whichAttack });
+		
+		var currentTurn = once("players").val().turn;
+		dataRef.ref().child("players").update({ turn: (currentTurn+1) });
+
+		if(myPlayerNumber == "player1"){
+			$("#combatant-ONE .screenDisplay").text( returnEmoji( whichAttack ) );
+		}else{ $("#combatant-TWO .screenDisplay").text( returnEmoji( whichAttack ) ); }
 	}
 
 
+ 	if(whatToDo == "try-to-chat" 
+ 		&& $("#chat-input").val().trim() != "" ){
+		if(myPlayerNumber == "player1" || myPlayerNumber == "player2"){
 
- 	if(whatToDo == "try-to-chat"){
- 		
- 		if($("#chat-input").val().trim() != "" ){
+			//grab the current chat log number from firebase
+			var currentChat_number = once("players").child("chatLog").child("currentCount").val() ;
+			
+			//update it right away
+			var newChat_number = (currentChat_number + 1);
+			dataRef.ref().child("players").child("chatLog").update({ 
+				currentCount: newChat_number 
+			});
 
-			if(myPlayerNumber == "player1" || myPlayerNumber == "player2"){
+			//use it to create a new chat item
+			var newChat_name = once("players").child(myPlayerNumber).child("name").val();
+			newChat_name = newChat_number + "_" + newChat_name + "_" + myPlayerNumber;
 
-				//grab the current chat log number from firebase
-				var currentChat_number = once("players").child("chatLog").child("currentCount").val() ;
-				
-				//update it right away
-				var newChat_number = (currentChat_number + 1);
-				dataRef.ref().child("players").child("chatLog").update({ 
-					currentCount: newChat_number 
-				});
+			//grab the actualy chat log line
+ 			var chatText = $("#chat-input").val().trim();
+			$("#chat-input").val("");
 
-				//use it to create a new chat item
-				var newChat_name = once("players").child(myPlayerNumber).child("name").val();
-				newChat_name = newChat_number + "_" + newChat_name + "_" + myPlayerNumber;
-
-				//grab the actualy chat log line
-	 			var chatText = $("#chat-input").val().trim();
-				$("#chat-input").val("");
-
-				//feed ALL that data to firebase, as a new chat log item
-				var updatedObj = {};
-				updatedObj[newChat_name] = chatText;
-				dataRef.ref().child("players").child("chatLog").update(updatedObj);
-			}
- 		}
+			//feed ALL that data to firebase, as a new chat log item
+			var updatedObj = {};
+			updatedObj[newChat_name] = chatText;
+			dataRef.ref().child("players").child("chatLog").update(updatedObj);
+		}
  	}
 
+ 	//game alerts pop up in the chat through this
  	if(whatToDo_Split[0] == "chat-log"){
-
-		// //grab the current chat log number from firebase
-		// var currentChat_number = once("players").child("chatLog").child("currentCount").val() ;
-		
-		// //update it right away
-		// var newChat_number = (currentChat_number + 1);
-		// dataRef.ref().child("players").child("chatLog").update({ 
-		// 	currentCount: newChat_number 
-		// });
-
-		// //use it to create a new chat item
-		// var newChat_name = once("players").child(myPlayerNumber).child("name").val();
-		// newChat_name = newChat_number + "_" + newChat_name + "_" + myPlayerNumber + "_alert";
-
-		// //grab the actualy chat log line
-		// var chatText = whatToDo_Split[1];
-
-		// //feed ALL that data to firebase, as a new chat log item
-		// var alreadyAdded_check = once("players").child("chatLog").child(newChat_name).val();
-		// if(!alreadyAdded_check){
-		// 	var updatedObj = {};
-		// 	updatedObj[newChat_name] = chatText;
-		// 	dataRef.ref().child("players").child("chatLog").update(updatedObj);
-		// }
-
-
 
 		var currentChat_number = once("players").child("chatLog").child("currentCount").val() ;
 		
@@ -267,42 +239,52 @@ dataRef.ref().on("child_changed", function(snapshot) {
 
 	//dealing with players joining the game, and quiting
 	var maybePlayer1 = snapshot.child("player1").child("name").val();
+	var maybePlayer2 = snapshot.child("player2").child("name").val();
+
 	if( maybePlayer1 ){ 
 		$("#combatant-one-data .combatant-name").text( maybePlayer1 ); 
 		//show p1 stats
 		$("#combatant-one-data .stats").removeClass("hide");
-		$("#combatant-one-data .stats .wins").text(snapshot.child("player1").child("wins").val());
-		$("#combatant-one-data .stats .losses").text(snapshot.child("player1").child("losses").val());
+		//fill it with stats
+		var wins_p1 = snapshot.child("player1").child("wins").val();
+		var losses_p1 = snapshot.child("player1").child("losses").val();
+		$("#combatant-one-data .stats .wins").text(wins_p1);
+		$("#combatant-one-data .stats .losses").text(losses_p1);
 
 	}else{ 
 		$("#combatant-one-data .combatant-name").text("Waiting for Player 1"); 
-
 		$("#combatant-one-data .stats").addClass("hide");
 	}
 
-	var maybePlayer2 = snapshot.child("player2").child("name").val();
 	if( maybePlayer2 ){ 
 		$("#combatant-two-data .combatant-name").text( maybePlayer2 ); 
 		//shjow p2 stats
 		$("#combatant-two-data .stats").removeClass("hide");
-		$("#combatant-two-data .stats .wins").text(snapshot.child("player2").child("wins").val());
-		$("#combatant-two-data .stats .losses").text(snapshot.child("player2").child("losses").val());
+		//fill it with stats
+		var wins_p2 = snapshot.child("player2").child("wins").val();
+		var losses_p2 = snapshot.child("player2").child("losses").val();
+		$("#combatant-two-data .stats .wins").text(wins_p2);
+		$("#combatant-two-data .stats .losses").text(losses_p2);
 
 	}else{ 
 		$("#combatant-two-data .combatant-name").text("Waiting for Player 2"); 
-
 		$("#combatant-two-data .stats").addClass("hide");
 	}
 
+	//if One of the two players is missing...
+	//...show the join game input to people who arent yet a player
 	if(!maybePlayer1 || !maybePlayer2){
 		$("#joinGame").removeClass("hide");
 
-		$("#combatant-two-data").removeClass("combantant-turn-highlight");
 		$("#combatant-one-data").removeClass("combantant-turn-highlight");
+		$("#combatant-two-data").removeClass("combantant-turn-highlight");
 
 		$("#overlay-display-holder").addClass("hide");
 		$("#overlay-display").addClass("hide").text("");
 	}
+
+	//if both player exist...
+	//...then lets start the game!
 	if(maybePlayer1 && maybePlayer2){
 		$("#joinGame").addClass("hide");
 
@@ -313,6 +295,8 @@ dataRef.ref().on("child_changed", function(snapshot) {
 			dataRef.ref().child("players").update({ turn: 1 });
 			currentTurn = 1;
 		}
+
+		//player1's turn!
 		if( currentTurn == 1 ){
 			$("#combatant-one-data").addClass("combantant-turn-highlight");
 			$("#combatant-two-data").removeClass("combantant-turn-highlight");
@@ -326,9 +310,13 @@ dataRef.ref().on("child_changed", function(snapshot) {
 				$("#atk").remove();
 			}
 
-			$("#combatant-ONE .screenDisplay").text( "" );
-			$("#combatant-TWO .screenDisplay").text( "" );
+			// $("#combatant-ONE .screenDisplay").text( "" );
+			// $("#combatant-TWO .screenDisplay").text( "" );
+			$("#combatant-ONE .screenDisplay").text( returnEmoji( "question" ) );
+			$("#combatant-TWO .screenDisplay").text( returnEmoji( "question" ) );
 		}
+
+		//player2's turn!
 		if( currentTurn == 2 ){
 			$("#combatant-one-data").removeClass("combantant-turn-highlight");
 			$("#combatant-two-data").addClass("combantant-turn-highlight");
@@ -344,25 +332,36 @@ dataRef.ref().on("child_changed", function(snapshot) {
 			}
 		}
 
+		//time to calculate...
+		//...the winner of this round!
 		if( currentTurn == 3 ){
 
+			//update turn to 4...
+			//..im using it as a sort of "End Game State"
 			dataRef.ref().child("players").update({ turn: 4 });	
 
-			$("#combatant-two-data").removeClass("combantant-turn-highlight");
+			//player two jsut got done attacking...
+			//..so lets reset their page
+			$("#combatant-two-data").removeClass("combantant-turn-highlight");	
 			if(myPlayerNumber =="player2"){
 				$("#atk").remove();
 				$("#display-text-sub").addClass("hide").text("");
 			}
-			//SHOW THE RESULTS AND ALSO DO R,P,S logic
+
+			//DO R,P,S logic..
+			//THEN SHOW THE RESULTS
+
 			var p1_choice = snapshot.child("player1").child("choice").val();
 			var p2_choice = snapshot.child("player2").child("choice").val();
-			//you need to store vars....
-			//..but only need to show the OTHER PLAYERS choice
+			//you need to store the choice vars....
+			//..but only need to show the OTHER PLAYERS choice..
+			//..your choice was loaded when you picked it
 			if(myPlayerNumber == "player2"){
 				$("#combatant-ONE .screenDisplay").text( returnEmoji( p1_choice ) );
 			}else{
 				$("#combatant-TWO .screenDisplay").text( returnEmoji( p2_choice ) );
 			}
+
 			//do the RPS logic!
 			var endDisplay = "";
 			var roundWinner = returnWinner(p1_choice, p2_choice); 
@@ -413,11 +412,11 @@ dataRef.ref().on("child_changed", function(snapshot) {
 				gameFunctions("chat-log_"+endDisplay);
 			}
 
-
+			//show the people who won!
 			$("#overlay-display-holder").removeClass("hide");
 			$("#overlay-display").removeClass("hide").text(endDisplay);
 
-			//set time out to start new round!
+			//set time-out to start new round!
 			setTimeout(function(){ 
 				$("#overlay-display-holder").addClass("hide");
 				$("#overlay-display").addClass("hide").text("");
@@ -425,8 +424,9 @@ dataRef.ref().on("child_changed", function(snapshot) {
 				if(myPlayerNumber == "player1"){
 					dataRef.ref().child("players").update({ turn: 1 });
 				}
-				$("#combatant-ONE .screenDisplay").text( "" );
-				$("#combatant-TWO .screenDisplay").text( "" );
+				$("#combatant-ONE .screenDisplay").text( returnEmoji( "question" ) );
+				$("#combatant-TWO .screenDisplay").text( returnEmoji( "question" ) );
+
 			}, (1000) );
 				
 		}
@@ -448,11 +448,14 @@ dataRef.ref().on("child_changed", function(snapshot) {
 	}
 });
 
+
+
+
 dataRef.ref().child("players").child("chatLog").on('value', function(snapshot) {
 
    	var currentChat_number = snapshot.child("currentCount").val() ;
 
-	//purge empty chats from firebase
+	//clear empty chats from firebase
 	if(currentChat_number == 0){		
 		snapshot.forEach(function(chat) {
 		  	if(chat.key !="currentCount"){
@@ -517,6 +520,8 @@ dataRef.ref().once("value", function(snapshot) {
 
  
   	var maybePlayer1 = snapshot.child("players").child("player1").child("name").val();
+	var maybePlayer2 = snapshot.child("players").child("player2").child("name").val();
+
 	if( maybePlayer1 ){ 
 		$("#combatant-one-data .combatant-name").text( maybePlayer1 ); 
 		//show p1 stats
@@ -525,11 +530,9 @@ dataRef.ref().once("value", function(snapshot) {
 		$("#combatant-one-data .stats .losses").text(snapshot.child("players").child("player1").child("losses").val());
 	}else{ 
 		$("#combatant-one-data .combatant-name").text("Waiting for Player 1"); 
-
 		$("#combatant-one-data .stats").addClass("hide");
 	}
 
-	var maybePlayer2 = snapshot.child("players").child("player2").child("name").val();
 	if( maybePlayer2 ){ 
 		$("#combatant-two-data .combatant-name").text( maybePlayer2 ); 
 		//shjow p2 stats
@@ -538,7 +541,6 @@ dataRef.ref().once("value", function(snapshot) {
 		$("#combatant-two-data .stats .losses").text(snapshot.child("players").child("player2").child("losses").val());
 	}else{ 
 		$("#combatant-two-data .combatant-name").text("Waiting for Player 2"); 
-
 		$("#combatant-two-data .stats").addClass("hide");
 	}
 
@@ -597,21 +599,50 @@ dataRef.ref().once("value", function(snapshot) {
 		}
 		
 
-
 	}
 });
 
 
+function returnWinner(p1_pick, p2_pick) {
+	returnThis = "";
+	if( p1_pick == "scissors" && p2_pick == "paper"
+		|| p1_pick == "rock" && p2_pick == "scissors"
+		|| p1_pick == "paper" && p2_pick == "rock"){
+		returnThis = "p1";
+	}
 
+	if( p1_pick == "rock" && p2_pick == "paper"
+		|| p1_pick == "paper" && p2_pick == "scissors"
+		|| p1_pick == "scissors" && p2_pick == "rock"){
+		returnThis = "p2";
+	}
+	
+	if( p1_pick == p2_pick){
+		returnThis = "tie";
+	}
+	return returnThis;
+}
+
+
+function returnEmoji(which) {
+	var returnThis = "";
+	if(which == "rock"){ returnThis = "👊"; }
+	if(which == "paper"){ returnThis = "✋️️"; }
+	if(which == "scissors"){ returnThis = "✌️️"; }
+	if(which == "question"){ returnThis = "❓"; }
+	return returnThis;
+}
+
+
+
+
+//Adding ALL this to try and get unload events on mobile devices
 
 var canUnload = true;
-window.onunload = function() {
-	page_unload();
-}
+window.onunload = function() {page_unload();}
 window.onbeforeunload = page_unload;
-window.addEventListener("beforeunload", function (event) {
-  page_unload();
-});
+window.addEventListener ("beforeunload", page_unload, false);
+
 function page_unload(){
    if(myPlayerNumber !="" && canUnload){
    		canUnload = false;
@@ -653,9 +684,17 @@ function page_unload(){
 
 
 
+
+
+
+
+/*BEGIN */
+/*FIREBASE SPECIFIC, COMMON JAVASCRIPT*/
+/*///////*/
+
 function once(keyName) {
 	var sendBack;
-	dataRef.ref().once("value", function(snapshot) {
+	firebase.database().ref().once("value", function(snapshot) {
 		snapshot.forEach(function(itemSnapshot) {
 	  	if(itemSnapshot.key == keyName){
 	  		sendBack = itemSnapshot;
@@ -665,42 +704,55 @@ function once(keyName) {
 	return sendBack;
 }
 
+/*END */
+/*FIREBASE SPECIFIC, COMMON JAVASCRIPT*/
+/*///////*/
 
 
-function returnWinner(p1_pick, p2_pick) {
-	returnThis = "";
-	if( p1_pick == "scissors" && p2_pick == "paper"
-		|| p1_pick == "rock" && p2_pick == "scissors"
-		|| p1_pick == "paper" && p2_pick == "rock"){
-		returnThis = "p1";
-	}
-
-	if( p1_pick == "rock" && p2_pick == "paper"
-		|| p1_pick == "paper" && p2_pick == "scissors"
-		|| p1_pick == "scissors" && p2_pick == "rock"){
-		returnThis = "p2";
-	}
-	
-	if( p1_pick == p2_pick){
-		returnThis = "tie";
-	}
-	return returnThis;
-}
 
 
-function returnEmoji(which) {
-	var returnThis = "";
-	if(which == "rock"){ returnThis = "👊"; }
-	if(which == "paper"){ returnThis = "✋️️"; }
-	if(which == "scissors"){ returnThis = "✌️️"; }
-	return returnThis;
-}
 
+
+
+
+/*BEGIN */
+/*NON SPECIFIC, COMMON JAVASCRIPT*/
+/*///////*/
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+
+
 function oddOrEven(x) {
   return ( x & 1 ) ? "odd" : "even";
 }
+
+
+
+console.todo = function( msg){
+ 	console.log( '%c %s %s %s ', 'color: yellow; background-color: black;', '--', msg, '--');
+}
+
+console.important = function( msg){
+        console.log( '%c%s %s %s', 'color: white; font-weight: bold; background-color: brown', '--', msg, '--');
+}
+
+
+
+function shakeThings(el) {
+    var thingToShake = document.getElementById(el);
+
+    var elClasses = thingToShake.classList;
+    if (elClasses.contains("shake")) { 
+    	elClasses.remove("shake"); 
+    }
+
+	thingToShake.classList.add("shake");
+	setTimeout(function(){ elClasses.remove("shake"); }, 500);
+}
+
+/*END */
+/*NON SPECIFIC, USUAL JAVASCRIPT*/
+/*///////*/
